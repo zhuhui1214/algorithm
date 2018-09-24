@@ -9,24 +9,26 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode *result = new ListNode(0);
-        ListNode *tmp = result;
-        int sum = 0;
-        while(l1 || l2){      
+        ListNode *result = new ListNode(0);//头结点为0
+        ListNode *tmp = result;//tmp 和result 是同一个链表
+        int sum = 0;//初始化一个值,0
+        while(l1||l2){
             if(l1){
-                sum += l1->val;
-                l1 = l1->next;
+                sum+=l1->val;
+                l1=l1->next;
             }
             if(l2){
-                sum += l2->val;
-                l2 = l2->next;
+                sum+=l2->val;
+                l2=l2->next;
             }
-            tmp->next = new ListNode(sum%10);//取余数，表示，如果个位数相加为10几，只要留下那个几
-            sum /= 10;//取整数，表示如果相加为10几，那个sum的初始值为1。
-            tmp = tmp->next;
+            //上面就把l1和l2加起来
+            tmp->next = new ListNode(sum%10);//tmp的下一个指针域变成余数
+            sum = sum/10;//重新初始化值，如果有进位，就为1，没有就为0
+            tmp=tmp->next;//tmp,就是一个光标，下一次循环需要前进一步
         }
         if(sum)
-            tmp->next = new ListNode(1);
+            tmp->next = new ListNode(1);//百位加起来，有进位，就要初始化1
+        //tmp此时存的时候是先存个位，再存十位，再存百位，如果有千位，就加1
         return result->next;
     }
 };
