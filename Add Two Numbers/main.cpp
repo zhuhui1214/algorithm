@@ -9,6 +9,24 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        
+        ListNode *result = new ListNode(0);
+        ListNode *tmp = result;
+        int sum = 0;
+        while(l1 || l2){      
+            if(l1){
+                sum += l1->val;
+                l1 = l1->next;
+            }
+            if(l2){
+                sum += l2->val;
+                l2 = l2->next;
+            }
+            tmp->next = new ListNode(sum%10);//取余数，表示，如果个位数相加为10几，只要留下那个几
+            sum /= 10;//取整数，表示如果相加为10几，那个sum的初始值为1。
+            tmp = tmp->next;
+        }
+        if(sum)
+            tmp->next = new ListNode(1);
+        return result->next;
     }
 };
